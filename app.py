@@ -21,9 +21,21 @@ Provide a way for the user to upload their data file.
 Import the `files` module and call the `upload()` method to allow the user to upload a file.
 """
 
-from google.colab import files
+import streamlit as st
+import pandas as pd
+import io
 
-uploaded_file = files.upload()
+st.title("🌊 Flood Pattern Data Analyzer")
+
+uploaded_file = st.file_uploader("📂 Upload your flood data CSV file", type=["csv"])
+
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    st.success("✅ File uploaded successfully!")
+    st.dataframe(df.head())
+else:
+    st.warning("Please upload a CSV file to start the analysis.")
+
 
 """## Show predictions for each month
 
